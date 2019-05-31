@@ -1,2 +1,4 @@
 node_modules
 .DS_Store
+dist/app.bundle.js
+dist/index.html

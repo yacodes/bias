@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --port 3000 --hot --host 0.0.0.0 src/index.js"
+    "dev": "webpack-dev-server --mode=development --port 3000 --hot --host 0.0.0.0",
+    "build": "webpack --mode=production"
   },
   "keywords": [],
   "author": "Aleksandr Yakunichev <canvaskisa@gmail.com> (https://www.npmjs.com/~canvaskisa)",

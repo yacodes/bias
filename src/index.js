@@ -6,10 +6,18 @@ const indexes = utils.shuffle([...Array(99).keys()]);
 let currentIndex = 0;
 let firstErrorRate = 0;
 let secondErrorRate = 0;
+let isFinished = false;
+
+window.addEventListener('keypress', e => {
+  if (e.code === 'KeyS') {
+    isFinished = true;
+  }
+});
 
 let networks = [new faceapi.TinyFaceDetectorOptions(), new faceapi.MtcnnOptions()];
 
 export const run = async () => {
+  console.log(firstErrorRate, secondErrorRate, currentIndex);
   networks = utils.shuffle(networks);
   if (!indexes[currentIndex]) return null;
   const $preview = await utils.createLoader(`Раунд ${currentIndex + 1}`);
@@ -77,6 +85,13 @@ export const run = async () => {
   await utils.fadeOut($img, 1500);
   await utils.delay(2000);
   currentIndex++;
+
+  if (isFinished) {
+    const $finish = await utils.createLoader(`Конец`, false);
+    await utils.fadeIn($finish, 1500);
+    return null;
+  }
+
   return run();
 };
 
@@ -88,6 +103,10 @@ export const init = async () => {
   await faceapi.loadFaceRecognitionModel('/models');
   await faceapi.loadFaceExpressionModel('/models');
   await faceapi.loadAgeGenderModel('/models');
+  const $start = await utils.createLoader(`Нажмите пробел,<br/> чтобы начать`, false);
+  await utils.fadeIn($start, 1500);
+  await new Promise(resolve => window.addEventListener('keypress', ev => ev.code === 'Space' ? resolve() : null));
+  await utils.fadeOut($start, 1500);
   run();
 };
 

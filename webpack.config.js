@@ -3,7 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 
 module.exports = {
-  mode: 'development',
   entry: {
     app: './src/index.js',
   },
