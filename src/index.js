@@ -19,7 +19,11 @@ let networks = [new faceapi.TinyFaceDetectorOptions(), new faceapi.MtcnnOptions(
 export const run = async () => {
   console.log(firstErrorRate, secondErrorRate, currentIndex);
   networks = utils.shuffle(networks);
-  if (!indexes[currentIndex]) return null;
+  if (indexes[currentIndex] === undefined) {
+    const $fail = await utils.createLoader(`Что-то пошло не так`, false);
+    await utils.fadeIn($fail, 1500);
+    return;
+  };
   const $preview = await utils.createLoader(`Раунд ${currentIndex + 1}`);
 
   await utils.fadeIn($preview, 1500);
